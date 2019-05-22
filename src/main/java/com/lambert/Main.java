@@ -1,17 +1,15 @@
 package com.lambert;
 
 import com.google.gson.Gson;
-import com.lambert.dalgen.mybatis.dataloaders.AbstractDalgenLoader;
-import com.lambert.dalgen.mybatis.dataloaders.DalgenLoader;
+import com.lambert.dalgen.mybatis.dataloaders.DalgenTableLoader;
 import com.lambert.dalgen.mybatis.model.dbtable.Table;
-import com.lambert.dalgen.mybatis.repository.TableRepository;
 
 public class Main {
 
     public static void main(String[] args) {
         try {
 
-            DalgenLoader loader = new DalgenLoader();
+            DalgenTableLoader loader = new DalgenTableLoader();
 
             Table table = loader.load();
             Gson gson = new Gson();
