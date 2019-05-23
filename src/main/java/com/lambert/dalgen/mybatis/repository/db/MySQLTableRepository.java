@@ -5,6 +5,7 @@ import com.lambert.dalgen.mybatis.model.dbtable.Column;
 import com.lambert.dalgen.mybatis.model.dbtable.PrimaryKeys;
 import com.lambert.dalgen.mybatis.model.dbtable.Table;
 import com.lambert.dalgen.utils.CamelCaseUtils;
+import com.lambert.dalgen.utils.ConfigUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.type.JdbcType;
 
@@ -52,7 +53,7 @@ public class MySQLTableRepository {
             column.setSqlType(JdbcType.forCode(resultSet.getInt("DATA_TYPE")).name());
             column.setDefaultValue(Str(resultSet, "COLUMN_DEF"));
             column.setJavaName(CamelCaseUtils.toCamelCase(column.getSqlName()));
-            column.setJavaType(getJavaType());
+            column.setJavaType(getJavaType(column));
             column.setRemarks(Str(resultSet, "REMARKS", column.getSqlName()));
             table.addColumn(column);
         }
@@ -78,8 +79,10 @@ public class MySQLTableRepository {
         table.setPrimaryKeys(primaryKeys);
     }
 
-    private String getJavaType() {
-        return "";
+    private String getJavaType(Column column) {
+        String javaType = TypeMapEnum.getByJdbcType(column.getSqlType()).getJavaType();
+        String custJavaType = ConfigUtil.getConfig().getTypeMap().get(javaType);
+        return StringUtils.isBlank(custJavaType) ? javaType : custJavaType;
     }
     private String Str(ResultSet resultSet, String column) throws SQLException {
         return StringUtils.upperCase(resultSet.getString(column));

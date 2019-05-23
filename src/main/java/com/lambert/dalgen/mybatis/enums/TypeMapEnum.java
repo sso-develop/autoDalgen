@@ -1,5 +1,7 @@
 package com.lambert.dalgen.mybatis.enums;
 
+import com.lambert.dalgen.mybatis.exception.DalgenException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,12 +127,12 @@ public enum TypeMapEnum {
         }
     }
 
-    public static TypeMapEnum getByJdbcType(String jdbcType) throws Exception {
+    public static TypeMapEnum getByJdbcType(String jdbcType) {
         TypeMapEnum type = codeLookup.get(jdbcType);
         if (type != null) {
             return type;
         }
-        throw new Exception("类型转换错误:" + jdbcType);
+        throw new DalgenException("类型转换错误:" + jdbcType);
     }
 
     /**
