@@ -1,0 +1,25 @@
+#set ( $table = $dalgen )
+<table sqlname="${table.sqlName}" physicalName="${table.physicalName}" remark="${table.remark}">
+     <operation name="insert" paramtype="object" remark="插入表:${table.sqlName}">
+         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+         </selectKey>
+          INSERT INTO ${table.sqlName}(
+            #foreach ( $column in $table.columnList )#if( $table.columnList.size() == $velocityCount) $column.sqlName#else$column.sqlName ,#end #end
+          )VALUES(
+            #foreach ( $column in $table.columnList )#if( $table.columnList.size() == $velocityCount) $column.javaName#else$column.javaName ,#end #end
+          )
+     </operation>
+     <operation name="update" paramtype="object" remark="更新表:${table.sqlName}">
+        UPDATE ${table.sqlName} SET
+             #foreach ( $column in $table.columnList )
+                #if( $table.columnList.size() == $velocityCount)
+                    $column.sqlName = $column.javaName
+                 #else
+                    $column.sqlName = $column.javaName ,
+                #end
+             #end
+         WHERE id = id
+     <operation/>
+</table>
