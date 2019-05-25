@@ -1,0 +1,24 @@
+#macro(operation2Sql $param)#if(${param.indexOf("insert")}!=-1)
+insert##
+#elseif(${param.indexOf("update")}!=-1)
+update##
+#elseif(${param.indexOf("delete")}!=-1)
+delete##
+#else
+select##
+#end
+#end
+
+
+#macro(mapperResult $operation)
+#if($operation.resultMap)
+resultMap="${operation.resultMap}"##
+#elseif($operation.resultType)
+resultMap="${operation.resultType}"##
+#elseif(${param.indexOf("insert")}!=-1)
+#elseif(${param.indexOf("update")}!=-1)
+#elseif(${param.indexOf("delete")}!=-1)
+#else
+resultMap="BaseResultMap"
+#end
+#end

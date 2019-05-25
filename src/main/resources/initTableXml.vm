@@ -11,7 +11,7 @@
             #foreach ( $column in $table.columnList )#if( $table.columnList.size() == $velocityCount) $column.javaName#else$column.javaName ,#end #end
           )
      </operation>
-     <operation name="update" paramtype="object" remark="更新表:${table.sqlName}">
+     <operation name="update" paramType="object" remark="更新表:${table.sqlName}">
         UPDATE ${table.sqlName} SET
              #foreach ( $column in $table.columnList )
                 #if( $table.columnList.size() == $velocityCount)
@@ -20,6 +20,22 @@
                     $column.sqlName = $column.javaName ,
                 #end
              #end
-         WHERE id = id
-     <operation/>
+        WHERE id = id
+     </operation>
+     <operation name = "deleteById" multiplicity="one" remark="根据ID删除数据:${table.sqlName}">
+        DELETE FROM ${table.sqlName} WHERE id = id
+     </operation>
+     <operation name = "getById" multiplicity = "one" remark="根据主键获取数据:${table.sqlName}">
+           SELECT *
+                   FROM ${table.sqlName}
+                   WHERE 1=1
+
+                #foreach ( $column in $table.columnList )
+                   #if( $table.columnList.size() == $velocityCount)
+                       $column.sqlName = $column.javaName
+                    #else
+                       $column.sqlName = $column.javaName AND
+                   #end
+                #end
+     </operation>
 </table>

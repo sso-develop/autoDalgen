@@ -24,9 +24,9 @@ public class InitTableXmlGenerator extends TemplateGenerator {
     @Override
     protected void setPath() {
         if(StringUtils.isBlank(super.path)){
-            super.path = "sqlmap-mapping.xml";
+            super.path = "uums-sys-app.xml";
         }else{
-            super.path = super.path +"sqlmap-mapping.xml";
+            super.path = super.path +"uums-sys-app.xml";
         }
 
     }
