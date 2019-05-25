@@ -31,12 +31,12 @@ public class Main {
             CfTable cfTable = cfTableLoader.load();
             System.err.println(gson.toJson(cfTable));
 
-//            DalgenXmlMapperLoader dalgenXmlMapperLoader = new DalgenXmlMapperLoader();
-//            XmlMapper xmlMapper = dalgenXmlMapperLoader.load(cfTable);
-//            System.err.println(gson.toJson(xmlMapper));
-//
-//            XmlMapperGenerator xmlMapperGenerator = new XmlMapperGenerator("XMLMapper.vm",xmlMapper);
-//            xmlMapperGenerator.run();
+            DalgenXmlMapperLoader dalgenXmlMapperLoader = new DalgenXmlMapperLoader();
+            XmlMapper xmlMapper = dalgenXmlMapperLoader.load(cfTable);
+            System.err.println(gson.toJson(xmlMapper));
+
+            XmlMapperGenerator xmlMapperGenerator = new XmlMapperGenerator("XMLMapper.vm",xmlMapper);
+            xmlMapperGenerator.run();
 
     }catch (Exception e){
             e.printStackTrace();

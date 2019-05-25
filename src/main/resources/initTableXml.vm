@@ -3,9 +3,9 @@
 
 
 
-     #foreach ( $column in $table.columnList )
+#foreach ( $column in $table.columnList )
      <column name="$column.sqlName" javaType = "$column.javaType" sqlType = "$column.sqlType"/>
-     #end
+#end
 
      <operation name="insert" paramtype="object" remark="插入表:${table.sqlName}">
          <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
@@ -13,22 +13,24 @@
             LAST_INSERT_ID()
          </selectKey>
           INSERT INTO ${table.sqlName}(
-            #foreach ( $column in $table.columnList )#if( $table.columnList.size() == $velocityCount) $column.sqlName#else$column.sqlName ,#end #end
+#foreach($column in $table.columnList)
+            #if( $velocityCount != 1),#end $column.sqlName
+#end
           )VALUES(
-            #foreach ( $column in $table.columnList )#if( $table.columnList.size() == $velocityCount) $column.javaName#else$column.javaName ,#end #end
+#foreach($column in $table.columnList)
+            #if($velocityCount != 1),#end$column.javaName
+#end
           )
      </operation>
      <operation name="update" paramType="object" remark="更新表:${table.sqlName}">
         UPDATE ${table.sqlName} SET
-             #foreach ( $column in $table.columnList )
-                #if( $table.columnList.size() == $velocityCount)
-                    $column.sqlName = $column.javaName
-                 #else
-                    $column.sqlName = $column.javaName ,
-                #end
-             #end
+#foreach ( $column in $table.columnList )
+         #if($velocityCount != 1),#end $column.sqlName = $column.javaName
+#end
         WHERE id = id
      </operation>
+
+
      <operation name = "deleteById" multiplicity="one" remark="根据ID删除数据:${table.sqlName}">
         DELETE FROM ${table.sqlName} WHERE id = id
      </operation>
@@ -36,13 +38,8 @@
            SELECT *
                    FROM ${table.sqlName}
                    WHERE 1=1
-
-                #foreach ( $column in $table.columnList )
-                   #if( $table.columnList.size() == $velocityCount)
-                       $column.sqlName = $column.javaName
-                    #else
-                       $column.sqlName = $column.javaName AND
-                   #end
-                #end
+#foreach ( $column in $table.columnList )
+                   AND $column.sqlName = $column.javaName
+#end
      </operation>
 </table>

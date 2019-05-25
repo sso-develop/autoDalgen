@@ -7,9 +7,15 @@
          #foreach ( $column in $xmlMapper.cfTable.columns )
             #if($column.name=="id")
                 <id column="$column.name" property="$column.javaName" jdbcType="$column.sqlType" javaType="$column.javaType"/>
+            #else
+                <result column="${column.name}" property="${column.javaName}" jdbcType="${column.sqlType}" javaType="${column.javaType}"/>
             #end
          #end
      </resultMap>
+
+     <#-- baseSql -->
+      <sql id="Base_Column_List">#foreach ( $column in $xmlMapper.cfTable.columns )${column.name}#if($xmlMapper.cfTable.columns.size() != $velocityCount),#end#end</sql>
+
  #foreach ( $operation in $xmlMapper.cfTable.operations )
 
     <#operation2Sql($operation.name) id="#operation2Sql($operation.name)" #mapperResult($operation)>
