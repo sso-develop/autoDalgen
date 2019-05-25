@@ -10,11 +10,31 @@ public class XmlMapper {
 
     private CfTable cfTable;
 
+    private DO doClass;
+
+    private DOMapper doMapper;
+
     public CfTable getCfTable() {
         return cfTable;
     }
 
     public void setCfTable(CfTable cfTable) {
         this.cfTable = cfTable;
+    }
+
+    public DO getDoClass() {
+        return doClass;
+    }
+
+    public void setDoClass(DO doClass) {
+        this.doClass = doClass;
+    }
+
+    public DOMapper getDoMapper() {
+        return doMapper;
+    }
+
+    public void setDoMapper(DOMapper doMapper) {
+        this.doMapper = doMapper;
     }
 }

@@ -35,7 +35,7 @@ public class MySQLTableRepository {
 
         table.setPhysicalName(physicalName);
         table.setSqlName(logicName);
-        table.setJavaName(physicalName);
+        table.setJavaName(CamelCaseUtils.toCapitalizeCamelCase(table.getSqlName()));
         table.setRemark(logicName);
 
         return table;
