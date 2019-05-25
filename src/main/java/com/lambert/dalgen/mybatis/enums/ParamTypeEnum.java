@@ -3,7 +3,8 @@ package com.lambert.dalgen.mybatis.enums;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
+ *
+ * 参数类型
  */
 public enum ParamTypeEnum {
     /**
