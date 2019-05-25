@@ -2,6 +2,7 @@ package com.lambert.dalgen.mybatis.repository;
 
 import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
+import com.lambert.dalgen.mybatis.model.config.CfColumn;
 import com.lambert.dalgen.mybatis.model.config.CfOperation;
 import com.lambert.dalgen.mybatis.model.config.CfTable;
 import org.apache.commons.lang.StringUtils;
@@ -102,7 +103,11 @@ public class CfTableRepository {
     private void fillColumns(CfTable cfTable, Element table) {
         List<Element> elements = table.elements("column");
         for (Element e : elements) {
-            System.err.println(1);
+            CfColumn cfColumn = new CfColumn();
+            cfColumn.setName(attr(e, "name"));
+            cfColumn.setJavaType(attr(e, "javaType"));
+            cfColumn.setSqlType(attr(e, "sqlType"));
+            cfTable.addColumn(cfColumn);
         }
     }
     private String attr(Element e, String attr) {

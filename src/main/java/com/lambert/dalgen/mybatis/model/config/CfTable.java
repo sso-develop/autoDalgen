@@ -14,7 +14,14 @@ public class CfTable {
     private String physicalName;
     private String remark;
 
+    private List<CfColumn>    columns;
+
     private List<CfOperation> operations;
+
+    public void addColumn(CfColumn column) {
+        if(columns == null) columns = new ArrayList<CfColumn>();
+        this.columns.add(column);
+    }
 
 
     public void addOperation(CfOperation operation) {
@@ -60,5 +67,13 @@ public class CfTable {
 
     public void setOperations(List<CfOperation> operations) {
         this.operations = operations;
+    }
+
+    public List<CfColumn> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<CfColumn> columns) {
+        this.columns = columns;
     }
 }

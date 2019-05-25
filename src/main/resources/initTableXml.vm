@@ -1,5 +1,12 @@
 #set ( $table = $dalgen )
 <table sqlname="${table.sqlName}" physicalName="${table.physicalName}" remark="${table.remark}">
+
+
+
+     #foreach ( $column in $table.columnList )
+     <column name="$column.sqlName" javaType = "$column.javaType" sqlType = "$column.sqlType"/>
+     #end
+
      <operation name="insert" paramtype="object" remark="插入表:${table.sqlName}">
          <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT
