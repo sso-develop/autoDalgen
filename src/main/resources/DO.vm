@@ -1,0 +1,35 @@
+package $DO.packageName;
+
+#foreach ( $import in $DO.importList )
+import $import;
+#end
+
+/**
+ * The table ${DO.desc}
+ */
+public class ${DO.className}{
+
+#foreach ( $fields in $DO.fieldses )
+
+    /** ${fields.desc}.*/
+    private ${fields.javaType} ${fields.name};
+#end
+
+#foreach ( $fields in $DO.fieldses )
+     /**
+      * Set ${fields.name} ${fields.desc}.
+      */
+     public void set${fields.name}(${fields.javaType} ${fields.name}){
+            this.${fields.name} = ${fields.name};
+     }
+     /**
+      * Get ${fields.name} ${fields.desc}.
+      *
+      * @return the string
+      */
+     public ${fields.javaType} get${fields.name}(){
+         return ${fields.name};
+     }
+#end
+
+}

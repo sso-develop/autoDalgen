@@ -41,6 +41,7 @@ public class CfTableRepository {
         cfTable.setPhysicalName(attr(table, "physicalName"));
         cfTable.setRemark(attr(table, "remark"));
         cfTable.setSequence(attr(table, "sequence"));
+        cfTable.setJavaName(attr(table, "javaName"));
 
         fillColumns(cfTable,table);
 
@@ -105,8 +106,10 @@ public class CfTableRepository {
         for (Element e : elements) {
             CfColumn cfColumn = new CfColumn();
             cfColumn.setName(attr(e, "name"));
-            cfColumn.setJavaType(attr(e, "javaType"));
             cfColumn.setSqlType(attr(e, "sqlType"));
+            cfColumn.setJavaName(attr(e, "javaName"));
+            cfColumn.setJavaType(attr(e, "javaType"));
+            cfColumn.setRemark(attr(e, "remark"));
             cfTable.addColumn(cfColumn);
         }
     }

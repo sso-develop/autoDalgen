@@ -7,6 +7,7 @@ package com.lambert.dalgen.mybatis.model.config;
 public class CfColumn {
 
     private String name;
+    private String javaName;
     private String javaType;
     private String sqlType;
     private String remark;
@@ -41,5 +42,13 @@ public class CfColumn {
 
     public void setSqlType(String sqlType) {
         this.sqlType = sqlType;
+    }
+
+    public String getJavaName() {
+        return javaName;
+    }
+
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
     }
 }

@@ -3,6 +3,9 @@ package com.lambert.dalgen.mybatis.model.config;
 import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author lambert
  * @version $Id: CfOperation.java, v 0.1 2019年05月25日 5:25 PM lambert Exp $
@@ -45,6 +48,25 @@ public class CfOperation {
      * 排序
      */
     private String sqlDesc;
+
+    private Map<String, String> primitiveParams;
+
+    private Map<String, String> primitiveForeachParams;
+
+
+
+    public void addPrimitiveParam(String attr, String type) {
+        if(this.primitiveParams == null) this.primitiveParams = new HashMap<String, String>();
+        this.primitiveParams.put(attr, type);
+    }
+    public void addPrimitiveForeachParam(String itemName, String collName) {
+        if(this.primitiveForeachParams == null) this.primitiveForeachParams = new HashMap<String, String>();
+        if(this.primitiveForeachParams.containsKey(itemName)){
+            this.primitiveForeachParams.put(itemName+collName, collName);
+        }else {
+            this.primitiveForeachParams.put(itemName, collName);
+        }
+    }
 
     public String getName() {
         return name;
@@ -124,5 +146,21 @@ public class CfOperation {
 
     public void setSqlDesc(String sqlDesc) {
         this.sqlDesc = sqlDesc;
+    }
+
+    public Map<String, String> getPrimitiveParams() {
+        return primitiveParams;
+    }
+
+    public void setPrimitiveParams(Map<String, String> primitiveParams) {
+        this.primitiveParams = primitiveParams;
+    }
+
+    public Map<String, String> getPrimitiveForeachParams() {
+        return primitiveForeachParams;
+    }
+
+    public void setPrimitiveForeachParams(Map<String, String> primitiveForeachParams) {
+        this.primitiveForeachParams = primitiveForeachParams;
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 public class CfTable {
 
     private String sqlname;
+    private String javaName;
     private String sequence;
     private String physicalName;
     private String remark;
@@ -75,5 +76,13 @@ public class CfTable {
 
     public void setColumns(List<CfColumn> columns) {
         this.columns = columns;
+    }
+
+    public String getJavaName() {
+        return javaName;
+    }
+
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
     }
 }
