@@ -2,6 +2,14 @@
 #parse("./lib.vm")
 
 <mapper>
+
+     <resultMap id="BaseResultMap">
+         #foreach ( $column in $xmlMapper.cfTable.columns )
+            #if($column.name=="id")
+                <id column="$column.name" property="$column.javaName" jdbcType="$column.sqlType" javaType="$column.javaType"/>
+            #end
+         #end
+     </resultMap>
  #foreach ( $operation in $xmlMapper.cfTable.operations )
 
     <#operation2Sql($operation.name) id="#operation2Sql($operation.name)" #mapperResult($operation)>
