@@ -1,0 +1,11 @@
+
+#parse("./lib.vm")
+
+<mapper>
+ #foreach ( $operation in $xmlMapper.cfTable.operations )
+
+    <#operation2Sql($operation.name) id="#operation2Sql($operation.name)" #mapperResult($operation)>
+        ${operation.cdata}
+    </#operation2Sql($operation.name)>
+ #end
+ </mapper>
