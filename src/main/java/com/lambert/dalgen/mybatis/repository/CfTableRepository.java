@@ -28,6 +28,10 @@ public class CfTableRepository {
 
     private static final Pattern STAR_BRACKET            = Pattern.compile("\\((\\s*\\*\\s*)\\)");
     private static final Pattern PARAM_PATTERN           = Pattern.compile("#\\{(.*?)\\}");
+    private static final Pattern SELECT_FROM_PATTERN            = Pattern.compile("[s|S][e|E][l|L][e|E][c|C][t|T]\\s+[\\s\\S]*?\\s+[f|F][r|R][o|O][m|M]");
+    private static final String  ORDER_BY_PATTERN        = "[o|O][r|R][d|D][e|E][r|R]\\s+[b|B][y|Y]\\s+";
+
+    private static final String REPLACE_TMP = " ( ⊙ o ⊙ ) ";
 
     public CfTable gainCfTable() throws DocumentException {
 
@@ -101,6 +105,29 @@ public class CfTableRepository {
         }
 
         cfOperation.setCdata(cdata);
+        //pageCount添加
+        setCfOperationPageCdata(cdata, cfOperation);
+    }
+
+    private void setCfOperationPageCdata(String cdata, CfOperation cfOperation) {
+        if (cfOperation.getMultiplicity() == MultiplicityEnum.paging) {//分页配置
+
+            String forCount = cdata;
+            Matcher selectFromMather = SELECT_FROM_PATTERN.matcher(cdata);
+            if(selectFromMather.find()){
+                forCount = selectFromMather.replaceFirst("SELECT\n          COUNT(*) AS total \n        FROM\n");
+            }
+
+            String cdataCount = forCount.replaceAll(ORDER_BY_PATTERN, REPLACE_TMP);
+            int indexof = cdataCount.indexOf(REPLACE_TMP);
+            if (indexof > 0) {
+                cdataCount = cdataCount.substring(0, indexof).replaceAll(
+                        "(?m)^\\s*$" + System.lineSeparator(), "");
+            }
+
+            cfOperation.setCdataPageCount(cdataCount);
+
+        }
     }
     private void fillOperationParams(Element e, CfOperation cfOperation) {
         if (cfOperation.getParamType() != ParamTypeEnum.primitive) {

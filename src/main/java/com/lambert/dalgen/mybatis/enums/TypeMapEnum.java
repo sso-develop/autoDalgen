@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by bangis.wangdf on 15/12/5. 字段映射枚举
+ * @author lambert
+ * @version $Id: A.java, v 0.1 2019年05月29日 8:31 PM lambert Exp $
  */
 public enum TypeMapEnum {
     /**

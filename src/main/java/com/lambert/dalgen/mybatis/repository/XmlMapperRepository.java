@@ -10,6 +10,8 @@ import com.lambert.dalgen.mybatis.model.java.*;
 import com.lambert.dalgen.mybatis.model.java.domapper.DOMapperMethod;
 import com.lambert.dalgen.mybatis.model.java.domapper.DOMapperMethodParam;
 import com.lambert.dalgen.utils.ConfigUtil;
+import com.lambert.dalgen.utils.StringDalUtil;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 
@@ -80,8 +82,8 @@ public class XmlMapperRepository {
 
         for (CfOperation operation : cfTable.getOperations()) {
             if (operation.getMultiplicity() == MultiplicityEnum.paging) {//分页
-//                prePagingMethod(gen, cfTable, table, doClass, resultMaps, doMapper, columnTypeMap,
-//                        columnDescMap, operation);
+                prePagingMethod(cfTable, doClass, doMapper, columnTypeMap,
+                        columnDescMap, operation);
             } else {
                 preMethod(doClass, doMapper, operation, columnTypeMap);
             }
@@ -89,12 +91,66 @@ public class XmlMapperRepository {
 
         xmlMapper.setDoMapper(doMapper);
     }
+    private void prePagingMethod(CfTable cfTable, DO doClass,
+                                 DOMapper doMapper,
+                                 Map<String, String> columnTypeMap,
+                                 Map<String, String> columnDescMap, CfOperation operation) {
+        DOMapperMethod pagingResultMethod = new DOMapperMethod();
+        pagingResultMethod.setName(operation.getName() + "Result");
+        pagingResultMethod.setPagingName(operation.getName());
+        pagingResultMethod.setDesc(operation.getRemark());
+        pagingResultMethod.setSql(operation.getSqlDesc());
+        pagingResultMethod.setPagingFlag("true");
+
+//        Paging paging = new Paging();
+//        paging.setClassName(StringDalUtil.upperFirst(operation.getPaging()) + "Page");
+//        paging.setPackageName("paging");
+//        paging.setClassPath("paging");
+//        paging.setBasePackageName("paging");
+//        paging.setBaseClassPath("paging");
+//        getClassAndImport(paging, paging.getBasePackageName() + ".BasePage");
+//        paging.setDesc(StringDalUtil.join(cfTable.getSqlname(), cfTable.getRemark()));
+//        paging.setTableName(cfTable.getSqlname());
+//
+//        String pagingResultType = operationResultType(doClass, paging, operation);
+//
+//        paging.setResultType(pagingResultType);
+//        List<DOMapperMethodParam> params = preMethodParams(paging, operation, columnTypeMap);
+//        for (DOMapperMethodParam param : params) {
+//            Filelds filelds = new Filelds();
+//            filelds.setName(param.getParam());
+//            filelds.setJavaType(param.getParamType());
+//            filelds.setDesc(columnDescMap.get(param.getParam()));
+//            paging.addFields(filelds);
+//        }
+
+        /*******************************************/
+        //paging import到doMapper
+        //getClassAndImport(doMapper, paging.getPackageName() + "." + paging.getClassName());
+        //getClassAndImport(doMapper, "java.util.List");
+        //方法返回结果
+
+        //DOMapperMethodParam pagingParam = new DOMapperMethodParam(StringDalUtil.lowerFirst(operation.getPaging()));
+        //pagingResultMethod.addParam(pagingParam);
 
 
-    private void preResultMap(){
+        pagingResultMethod.addParam(new DOMapperMethodParam(getClassAndImport(doMapper,doClass.getPackageName() + "." + doClass.getClassName()), "entity"));
+        String resultType = operationResultType(doClass, doMapper, operation);
+
+
+        pagingResultMethod.setReturnClass("List<" + resultType + ">");
+        try {
+            DOMapperMethod pagingCountMethod = (DOMapperMethod) BeanUtils.cloneBean(pagingResultMethod);
+            pagingCountMethod.setName(operation.getName() + "Count");
+            pagingCountMethod.setReturnClass("int");
+            doMapper.addMothed(pagingCountMethod);
+        } catch (Exception e) {
+            //LOG.error("", e);
+        }
+
+        doMapper.addMothed(pagingResultMethod);
 
     }
-
 
     private void preMethod(DO doClass, DOMapper doMapper,
                            CfOperation operation, Map<String, String> columnMap) {

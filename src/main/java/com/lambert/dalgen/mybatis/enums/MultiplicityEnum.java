@@ -3,19 +3,21 @@ package com.lambert.dalgen.mybatis.enums;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Created by bangis.wangdf on 15/12/5. Desc
+ * 返回类型
+ * @author lambert
+ * @version $Id: MultiplicityEnum.java, v 0.1 2019年05月29日 8:29 PM lambert Exp $
  */
 public enum MultiplicityEnum {
     /**
-     * One multiplicity enum.
+     * 对象
      */
     one("one"),
     /**
-     * Many multiplicity enum.
+     * 集合
      */
     many("many"),
     /**
-     * Paging multiplicity enum.
+     * 分页对象
      */
     paging("paging");
 

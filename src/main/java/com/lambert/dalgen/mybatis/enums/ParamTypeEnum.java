@@ -3,8 +3,9 @@ package com.lambert.dalgen.mybatis.enums;
 import org.apache.commons.lang.StringUtils;
 
 /**
- *
  * 参数类型
+ * @author lambert
+ * @version $Id: A.java, v 0.1 2019年05月29日 8:31 PM lambert Exp $
  */
 public enum ParamTypeEnum {
     /**

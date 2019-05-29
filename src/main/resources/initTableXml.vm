@@ -41,4 +41,11 @@
            $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
 #end
      </operation>
+
+     <operation name = "getByPage" multiplicity = "paging" paging="ABC" remark="根据主键获取数据:${table.sqlName}">
+           SELECT * FROM ${table.sqlName} WHERE
+#foreach ( $column in $table.primaryKeys.columnList )
+           $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
+#end
+     </operation>
 </table>

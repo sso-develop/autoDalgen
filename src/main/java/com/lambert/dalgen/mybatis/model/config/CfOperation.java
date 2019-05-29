@@ -2,7 +2,6 @@ package com.lambert.dalgen.mybatis.model.config;
 
 import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
-import org.apache.velocity.runtime.directive.ForeachScope;
 
 import java.util.HashMap;
 import java.util.Map;
