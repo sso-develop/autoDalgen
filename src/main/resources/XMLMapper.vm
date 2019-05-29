@@ -24,6 +24,7 @@
     </#operation2Sql($operation.name)>
     <#operation2Sql($operation.name) id="#operation2Sql($operation.name)Result" #mapperResult($operation)>
           ${operation.cdata}
+          limit #{start},#{limit}
     </#operation2Sql($operation.name)>
  #else
     <#operation2Sql($operation.name) id="#operation2Sql($operation.name)" #mapperResult($operation)>

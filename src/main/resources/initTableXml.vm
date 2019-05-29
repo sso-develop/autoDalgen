@@ -16,7 +16,7 @@
 #end
           )VALUES(
 #foreach($column in $table.columnList)
-            #if($velocityCount != 1),#end$column.javaName
+            #if($velocityCount != 1),#end#{$column.javaName}
 #end
           )
      </operation>
@@ -24,9 +24,9 @@
      <operation name="update" paramType="object" remark="更新表:${table.sqlName}">
         UPDATE ${table.sqlName} SET
 #foreach ( $column in $table.columnList )
-         #if($velocityCount != 1),#end$column.sqlName = $column.javaName
+         #if($velocityCount != 1),#end$column.sqlName = #{$column.javaName}
 #end
-        WHERE id = id
+        WHERE id = #{id}
      </operation>
 
      <operation name = "deleteById" multiplicity="one" remark="根据ID删除数据:${table.sqlName}">
@@ -44,8 +44,8 @@
 
      <operation name = "getByPage" multiplicity = "paging" paging="ABC" remark="根据主键获取数据:${table.sqlName}">
            SELECT * FROM ${table.sqlName} WHERE
-#foreach ( $column in $table.primaryKeys.columnList )
-           $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
+#foreach ( $column in $table.columnList )
+           $column.sqlName = #{$column.javaName}
 #end
      </operation>
 </table>
