@@ -17,4 +17,12 @@ public class DOMapper extends Base{
         if(this.motheds== null) this.motheds = new ArrayList<DOMapperMethod>();
         this.motheds.add(mothed);
     }
+
+    public List<DOMapperMethod> getMotheds() {
+        return motheds;
+    }
+
+    public void setMotheds(List<DOMapperMethod> motheds) {
+        this.motheds = motheds;
+    }
 }

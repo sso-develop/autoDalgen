@@ -83,7 +83,7 @@ public class XmlMapperRepository {
 //                prePagingMethod(gen, cfTable, table, doClass, resultMaps, doMapper, columnTypeMap,
 //                        columnDescMap, operation);
             } else {
-   //             preMethod(doClass, resultMaps, doMapper, operation, columnTypeMap);
+                preMethod(doClass, doMapper, operation, columnTypeMap);
             }
         }
 
@@ -96,7 +96,7 @@ public class XmlMapperRepository {
     }
 
 
-    private void preMethod(DO doClass, Map<String, ResultMap> resultMaps, DOMapper doMapper,
+    private void preMethod(DO doClass, DOMapper doMapper,
                            CfOperation operation, Map<String, String> columnMap) {
 
         DOMapperMethod method = new DOMapperMethod();
@@ -104,7 +104,7 @@ public class XmlMapperRepository {
         method.setDesc(operation.getRemark());
         method.setSql(operation.getSqlDesc());
         preMethodParam(doClass, doMapper, operation, method, columnMap);
-        String resultType = operationResultType(doClass, doMapper, operation, resultMaps);
+        String resultType = operationResultType(doClass, doMapper, operation);
         method.setReturnClass(resultType);
         doMapper.addMothed(method);
 
@@ -155,8 +155,7 @@ public class XmlMapperRepository {
         return params;
     }
 
-    private String operationResultType(DO doClass, Base base, CfOperation operation,
-                                       Map<String, ResultMap> resultMaps) {
+    private String operationResultType(DO doClass, Base base, CfOperation operation) {
 
         if (StringUtils.startsWithIgnoreCase(operation.getName(), "insert")
                 || StringUtils.startsWithIgnoreCase(operation.getName(), "update")
@@ -167,13 +166,7 @@ public class XmlMapperRepository {
         String resultType;
         if (!StringUtils.isBlank(operation.getResultType())) {
             resultType = getClassAndImport(base, operation.getResultType());
-        } else if (!StringUtils.isBlank(operation.getResultMap())) {
-            ResultMap resultMap = resultMaps.get(operation.getResultMap());
-            Validate.notNull(resultMap, "DalgenLoader.operationResultType 自定义ResultMap出错 table = "
-                    + doClass.getTableName() + " DO=" + doClass);
-            resultType = getClassAndImport(base,
-                    resultMap.getPackageName() + "." + resultMap.getClassName());
-        } else {
+        }  else {
             resultType = getClassAndImport(base,
                     doClass.getPackageName() + "." + doClass.getClassName());
         }

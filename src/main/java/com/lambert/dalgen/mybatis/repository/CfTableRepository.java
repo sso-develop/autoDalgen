@@ -5,6 +5,7 @@ import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 import com.lambert.dalgen.mybatis.model.config.CfColumn;
 import com.lambert.dalgen.mybatis.model.config.CfOperation;
 import com.lambert.dalgen.mybatis.model.config.CfTable;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.dom4j.Attribute;
@@ -14,6 +15,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +27,7 @@ import java.util.regex.Pattern;
 public class CfTableRepository {
 
     private static final Pattern STAR_BRACKET            = Pattern.compile("\\((\\s*\\*\\s*)\\)");
+    private static final Pattern PARAM_PATTERN           = Pattern.compile("#\\{(.*?)\\}");
 
     public CfTable gainCfTable() throws DocumentException {
 
@@ -70,7 +73,7 @@ public class CfTableRepository {
 
 
             setCfOperationCdata(cfTable, e, cfOperation);
-
+            fillOperationParams(e, cfOperation);
             cfTable.addOperation(cfOperation);
         }
 
@@ -99,7 +102,62 @@ public class CfTableRepository {
 
         cfOperation.setCdata(cdata);
     }
+    private void fillOperationParams(Element e, CfOperation cfOperation) {
+        if (cfOperation.getParamType() != ParamTypeEnum.primitive) {
+            return;
+        }
 
+        //取出foreach 用来判断是否有List参数
+        List<Element> items = e.elements();
+
+        if (CollectionUtils.isNotEmpty(items)) {
+            for (Element item : items) {
+                List<Element> ies = item.elements();
+                if (CollectionUtils.isNotEmpty(ies)) {
+                    for (Element ie : ies) {
+                        if (StringUtils.endsWithIgnoreCase(ie.getName(), "foreach")) {
+                            String collName = ie.attributeValue("collection");
+                            String itemName = ie.attributeValue("item");
+                            Validate.notEmpty(collName,
+                                    "foreach 元素设置错误 table=" + cfOperation.getName());
+                            Validate.notEmpty(itemName,
+                                    "foreach 元素设置错误 table=" + cfOperation.getName());
+                            cfOperation.addPrimitiveForeachParam(itemName, collName);
+                        }
+                    }
+                } //找到List参数
+                else if (StringUtils.endsWithIgnoreCase(item.getName(), "foreach")) {
+                    String collName = item.attributeValue("collection");
+                    String itemName = item.attributeValue("item");
+                    Validate.notEmpty(collName, "foreach 元素设置错误 table=" + cfOperation.getName());
+                    Validate.notEmpty(itemName, "foreach 元素设置错误 table=" + cfOperation.getName());
+                    cfOperation.addPrimitiveForeachParam(itemName, collName);
+                }
+            }
+        }
+
+        Matcher m = PARAM_PATTERN.matcher(e.asXML());
+        List<String> params = new ArrayList<String>();
+        while (m.find()) {
+            params.add(m.group(1));
+        }
+        for (String p : params) {
+            String attr = null;
+            String type = null;
+            for (String s : StringUtils.split(p, ",")) {
+                if (s.contains("=")) {
+                    if (StringUtils.startsWithIgnoreCase(s, "javaType")
+                            || StringUtils.startsWithIgnoreCase(s, "jdbcType")) {
+                        type = StringUtils.split(s, "=")[1].trim();
+                    }
+                } else {
+                    attr = StringUtils.trim(s);
+                }
+            }
+            cfOperation.addPrimitiveParam(attr, type);
+        }
+
+    }
 
     private void fillColumns(CfTable cfTable, Element table) {
         List<Element> elements = table.elements("column");

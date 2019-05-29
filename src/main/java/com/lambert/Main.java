@@ -6,8 +6,10 @@ import com.lambert.dalgen.mybatis.dataloaders.DalgenTableLoader;
 import com.lambert.dalgen.mybatis.dataloaders.DalgenXmlMapperLoader;
 import com.lambert.dalgen.mybatis.model.config.CfTable;
 import com.lambert.dalgen.mybatis.model.dbtable.Table;
+import com.lambert.dalgen.mybatis.model.java.DOMapper;
 import com.lambert.dalgen.mybatis.model.java.XmlMapper;
 import com.lambert.vm.generator.DOGenerator;
+import com.lambert.vm.generator.DOMapperGenerator;
 import com.lambert.vm.generator.InitTableXmlGenerator;
 import com.lambert.vm.generator.XmlMapperGenerator;
 
@@ -44,6 +46,9 @@ public class Main {
 
             DOGenerator doGenerator = new DOGenerator("DO.vm",xmlMapper.getDoClass());
             doGenerator.run();
+
+            DOMapperGenerator doMapperGenerator = new DOMapperGenerator("DOMapper.vm",xmlMapper.getDoMapper());
+            doMapperGenerator.run();
 
     }catch (Exception e){
             e.printStackTrace();

@@ -5,7 +5,7 @@
      <column name="$column.sqlName" sqlType = "$column.sqlType" javaName="$column.javaName" javaType = "$column.javaType" remark="$column.remarks"/>
 #end
 
-     <operation name="insert" paramtype="object" remark="插入表:${table.sqlName}">
+     <operation name="insert" paramType="object" remark="插入表:${table.sqlName}">
          <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT
             LAST_INSERT_ID()
@@ -30,12 +30,15 @@
      </operation>
 
      <operation name = "deleteById" multiplicity="one" remark="根据ID删除数据:${table.sqlName}">
-        DELETE FROM ${table.sqlName} WHERE id = id
+        DELETE FROM ${table.sqlName} WHERE
+#foreach ( $column in $table.primaryKeys.columnList )
+        $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
+#end
      </operation>
      <operation name = "getById" multiplicity = "one" remark="根据主键获取数据:${table.sqlName}">
-           SELECT * FROM ${table.sqlName} WHERE 1=1
-#foreach ( $column in $table.columnList )
-           AND $column.sqlName = $column.javaName
+           SELECT * FROM ${table.sqlName} WHERE
+#foreach ( $column in $table.primaryKeys.columnList )
+           $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
 #end
      </operation>
 </table>

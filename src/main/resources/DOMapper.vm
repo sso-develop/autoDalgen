@@ -1,0 +1,12 @@
+package ${doMapper.packageName};
+
+#foreach ( $import in $doMapper.importList )
+import $import;
+#end
+
+public interface ${doMapper.className}{
+
+ #foreach ( $method in $doMapper.motheds )
+    ${method.returnClass} ${method.name}(#foreach ( $param in $method.params )${param.paramType} ${param.param}#end);
+ #end
+}

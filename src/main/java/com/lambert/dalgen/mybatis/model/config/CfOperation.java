@@ -2,6 +2,7 @@ package com.lambert.dalgen.mybatis.model.config;
 
 import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
+import org.apache.velocity.runtime.directive.ForeachScope;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +50,9 @@ public class CfOperation {
      */
     private String sqlDesc;
 
-    private Map<String, String> primitiveParams;
+    private Map<String, String> primitiveParams = new HashMap<String, String>();
 
-    private Map<String, String> primitiveForeachParams;
+    private Map<String, String> primitiveForeachParams = new HashMap<String, String>();
 
 
 
