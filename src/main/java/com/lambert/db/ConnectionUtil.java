@@ -1,5 +1,6 @@
 package com.lambert.db;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.db.model.Column;
 
 import java.sql.Connection;
@@ -19,13 +20,13 @@ public class ConnectionUtil {
     //声明Connection对象
 
     //驱动程序名
-    String driver = "com.mysql.jdbc.Driver";
+    String driver = DalgenProperties.getDriver();
     //URL指向要访问的数据库名mydata
-    String url = "jdbc:mysql://sql.v83.vhostgo.com:3306/linzekuan?useUnicode=true&amp;characterEncoding=UTF-8";
+    String url = DalgenProperties.getUrl();
     //MySQL配置时的用户名
-    String user = "linzekuan";
+    String user = DalgenProperties.getUser();
     //MySQL配置时的密码
-    String password = "lzk1314";
+    String password = DalgenProperties.getPassword();
 
     private Connection getCon() throws Exception{
 
