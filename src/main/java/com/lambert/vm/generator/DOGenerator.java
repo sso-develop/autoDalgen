@@ -1,5 +1,6 @@
 package com.lambert.vm.generator;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.dalgen.mybatis.model.java.DO;
 import com.lambert.vm.TemplateGenerator;
 import org.apache.commons.lang.StringUtils;
@@ -21,11 +22,7 @@ public class DOGenerator extends TemplateGenerator {
 
     @Override
     protected void setPath() {
-        if(StringUtils.isBlank(super.path)){
-            super.path = doClass.getClassName()+".java";
-        }else{
-            super.path = super.path +doClass.getClassName()+".java";
-        }
+        super.path = DalgenProperties.getDODirectory()+"/"+doClass.getClassName()+".java";
     }
 
     @Override

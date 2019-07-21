@@ -1,5 +1,6 @@
 package com.lambert.dalgen.mybatis.dataloaders;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.dalgen.mybatis.model.dbtable.Table;
 import com.lambert.dalgen.mybatis.repository.TableRepository;
 import org.slf4j.Logger;
@@ -18,7 +19,8 @@ public class DalgenTableLoader extends AbstractDalgenLoader{
     private TableRepository tableRepository   = new TableRepository();
 
     public Table load(Connection connection) throws Exception {
-        String table = "uums_sys_app";
+        //String table = "uums_sys_app";
+        String table = DalgenProperties.getTables();
         return tableRepository.gainTable(connection,table);
     }
 }
