@@ -22,17 +22,9 @@ public class DalgenProperties {
 
     private final static String basePackagePath = "/src/main/java/com/lambert";
 
-    private final static String basePackage = "com.lambert";
-
     private final static String resourcesPath = "/src/main/resources";
 
     private final static String projectDaoPath = "/app/common/dal";
-
-    private final static String autoDalgenDOPathSuffix = "dal/dataobject";
-
-    private final static String autoDalgenDOMapperPathSuffix = "/dal/daointerface";
-
-    private final static String autoDalgenXmlMapperPathSuffix  = "/dal/daointerface";
 
 
 
@@ -92,12 +84,21 @@ public class DalgenProperties {
     }
 
     public static String getDODirectory(){
-        return getDalClassDirectory();
+        return getDalClassDirectory()+"/dataobject";
+    }
+
+    public static String getDOMapperDirectory(){
+        return getDalClassDirectory()+"/daointerface";
+    }
+    public static String getDalgenDirectory(){
+        return projectDirectory+"/dalgen";
     }
 
 
     public static void main(String[] args) {
-        System.err.println(DalgenProperties.getDalClassDirectory());
+        System.err.println(DalgenProperties.getDODirectory());
+        System.err.println(DalgenProperties.getDOMapperDirectory());
         System.err.println(DalgenProperties.getDalResourcesDirectory());
+        System.err.println(DalgenProperties.getDalgenDirectory());
     }
 }
