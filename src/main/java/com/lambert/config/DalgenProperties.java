@@ -1,9 +1,5 @@
 package com.lambert.config;
 
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-
-import javax.annotation.Resource;
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
@@ -20,21 +16,23 @@ public class DalgenProperties {
 
     private static String tables;
 
+    private static String projectName;
+
     private static String projectDirectory;
 
-    private final static String basePackagePath = "/src/main/java/com/lambert/common";
+    private final static String basePackagePath = "/src/main/java/com/lambert";
 
-    private final static String basePackage = "com.lambert.common";
+    private final static String basePackage = "com.lambert";
 
-    private final static String resourcesPath = "/resources";
+    private final static String resourcesPath = "/src/main/resources";
 
     private final static String projectDaoPath = "/app/common/dal";
 
-    private final static String autoDalgenDOPath = basePackagePath+"/uums/dal/dataobject";
+    private final static String autoDalgenDOPathSuffix = "dal/dataobject";
 
-    private final static String autoDalgenDOMapperPath = basePackagePath+"/uums/dal/daointerface";
+    private final static String autoDalgenDOMapperPathSuffix = "/dal/daointerface";
 
-    private final static String autoDalgenXmlMapperPath  = basePackagePath+"/uums/dal/daointerface";
+    private final static String autoDalgenXmlMapperPathSuffix  = "/dal/daointerface";
 
 
 
@@ -53,6 +51,7 @@ public class DalgenProperties {
             url = prop.getProperty("url");
             user = prop.getProperty("user");
             password = prop.getProperty("password");
+            projectName = prop.getProperty("projectName");
             projectDirectory = prop.getProperty("projectDirectory");
             tables = prop.getProperty("tables");
             in.close();
@@ -83,17 +82,22 @@ public class DalgenProperties {
         return tables;
     }
 
-    private static String getProjectDirectory() {
-        return projectDirectory;
+
+    private static String getDalClassDirectory(){
+        return projectDirectory+projectDaoPath+basePackagePath+"/"+projectName+"/common/dal";
+    }
+
+    private static String getDalResourcesDirectory(){
+        return projectDirectory+projectDaoPath+resourcesPath;
     }
 
     public static String getDODirectory(){
-        return getProjectDirectory()+autoDalgenDOPath;
+        return getDalClassDirectory();
     }
 
 
     public static void main(String[] args) {
-        System.err.println(DalgenProperties.getDriver());
-
+        System.err.println(DalgenProperties.getDalClassDirectory());
+        System.err.println(DalgenProperties.getDalResourcesDirectory());
     }
 }
