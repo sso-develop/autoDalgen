@@ -45,7 +45,7 @@ public class XmlMapperRepository {
     private void preDo(XmlMapper xmlMapper,CfTable cfTable){
         DO doClass = new DO();
         doClass.setClassName(cfTable.getJavaName() + "DO");
-        doClass.setPackageName( "dataobject");
+        doClass.setPackageName(DalgenProperties.getDOPackageName());
 
         doClass.setClassPath(DalgenProperties.getDODirectory());
 
@@ -69,7 +69,7 @@ public class XmlMapperRepository {
 
         DOMapper doMapper = new DOMapper();
         doMapper.setClassName(doClass.getClassName() + "Mapper");
-        doMapper.setPackageName("mapper");
+        doMapper.setPackageName(DalgenProperties.getDOMapperPackageName());
         doMapper.setClassPath(DalgenProperties.getDOMapperDirectory());
         doMapper.setDesc(cfTable.getRemark());
         doMapper.setTableName(cfTable.getSqlname());
