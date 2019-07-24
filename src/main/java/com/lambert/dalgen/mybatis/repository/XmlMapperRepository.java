@@ -1,5 +1,6 @@
 package com.lambert.dalgen.mybatis.repository;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 import com.lambert.dalgen.mybatis.enums.TypeMapEnum;
@@ -45,7 +46,9 @@ public class XmlMapperRepository {
         DO doClass = new DO();
         doClass.setClassName(cfTable.getJavaName() + "DO");
         doClass.setPackageName( "dataobject");
-        doClass.setClassPath("dataobject");
+
+        doClass.setClassPath(DalgenProperties.getDODirectory());
+
         doClass.setDesc(cfTable.getRemark());
 
         for (CfColumn column : cfTable.getColumns()) {
@@ -67,7 +70,7 @@ public class XmlMapperRepository {
         DOMapper doMapper = new DOMapper();
         doMapper.setClassName(doClass.getClassName() + "Mapper");
         doMapper.setPackageName("mapper");
-        doMapper.setClassPath("mapper");
+        doMapper.setClassPath(DalgenProperties.getDOMapperDirectory());
         doMapper.setDesc(cfTable.getRemark());
         doMapper.setTableName(cfTable.getSqlname());
 

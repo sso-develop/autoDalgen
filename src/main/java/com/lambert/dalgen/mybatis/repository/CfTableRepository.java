@@ -1,5 +1,6 @@
 package com.lambert.dalgen.mybatis.repository;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 import com.lambert.dalgen.mybatis.model.config.CfColumn;
@@ -35,7 +36,7 @@ public class CfTableRepository {
 
     public CfTable gainCfTable() throws DocumentException {
 
-        File tableFile = new File("uums-sys-app.xml");
+        File tableFile = new File(DalgenProperties.getDalgenDirectory()+"/uums-sys-app.xml");
 
 
         SAXReader saxReader = new SAXReader();

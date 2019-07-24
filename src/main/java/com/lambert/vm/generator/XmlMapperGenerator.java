@@ -1,5 +1,6 @@
 package com.lambert.vm.generator;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.dalgen.mybatis.model.java.XmlMapper;
 import com.lambert.vm.TemplateGenerator;
 import org.apache.commons.lang.StringUtils;
@@ -21,11 +22,9 @@ public class XmlMapperGenerator extends TemplateGenerator {
 
     @Override
     protected void setPath() {
-        if(StringUtils.isBlank(super.path)){
-            super.path = "sqlmap-mapping.xml";
-        }else{
-            super.path = super.path +"sqlmap-mapping.xml";
-        }
+
+        super.path = DalgenProperties.getDalResourcesDirectory() +"/sqlmap-mapping.xml";
+
     }
 
     @Override
