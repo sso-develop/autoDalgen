@@ -7,6 +7,13 @@ import $import;
 public interface ${doMapper.className}{
 
  #foreach ( $method in $doMapper.motheds )
+
+    /**
+     * desc:$method.desc $method.name
+#foreach ( $param in $method.params )
+     * @param ${param.param}
+#end
+     */
     ${method.returnClass} ${method.name}(#foreach ( $param in $method.params )${param.paramType} ${param.param}#end);
  #end
 }

@@ -42,7 +42,7 @@
 #end
      </operation>
 
-          <operation name = "getAll" multiplicity = "many" remark="根据主键获取数据:${table.sqlName}">
+          <operation name = "getAll" multiplicity = "many" paramType="object" remark="根据主键获取数据:${table.sqlName}">
                 SELECT * FROM ${table.sqlName} WHERE
      #foreach ( $column in $table.primaryKeys.columnList )
                 $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}

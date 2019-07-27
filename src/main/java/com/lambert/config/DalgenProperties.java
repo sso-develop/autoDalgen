@@ -86,7 +86,7 @@ public class DalgenProperties {
     }
 
     public static String getDalResourcesDirectory(){
-        return projectDirectory+projectDaoPath+resourcesPath;
+        return projectDirectory+projectDaoPath+resourcesPath+"/sqlmap/"+projectName;
     }
 
     public static String getDODirectory(){
