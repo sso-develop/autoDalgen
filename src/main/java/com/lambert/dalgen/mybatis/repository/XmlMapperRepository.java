@@ -130,7 +130,7 @@ public class XmlMapperRepository {
         /*******************************************/
         //paging import到doMapper
         //getClassAndImport(doMapper, paging.getPackageName() + "." + paging.getClassName());
-        //getClassAndImport(doMapper, "java.util.List");
+        getClassAndImport(doMapper, "java.util.List");
         //方法返回结果
 
         //DOMapperMethodParam pagingParam = new DOMapperMethodParam(StringDalUtil.lowerFirst(operation.getPaging()));
