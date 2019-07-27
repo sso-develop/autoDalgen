@@ -77,12 +77,12 @@ public class DalgenProperties {
     }
 
     private static String getBasePackageName(){
-        return basePackageName+"."+projectName+".common.dal";
+        return basePackageName+".common."+projectName+".dal";
     }
 
 
     private static String getDalClassDirectory(){
-        return projectDirectory+projectDaoPath+basePackagePath+"/"+projectName+"/common/dal";
+        return projectDirectory+projectDaoPath+basePackagePath+"/common/"+projectName+"/dal";
     }
 
     public static String getDalResourcesDirectory(){

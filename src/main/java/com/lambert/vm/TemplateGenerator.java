@@ -56,7 +56,7 @@ public abstract class TemplateGenerator {
     private void merge() {
         StringWriter sw = new StringWriter();
         template.merge(ctx, sw);
-        System.out.println(sw.toString());
+        //System.out.println(sw.toString());
 
         PrintWriter writer = null;
         try {
