@@ -6,6 +6,7 @@
 #end
 
      <operation name="insert" paramType="object" remark="插入表:${table.sqlName}">
+         <sql>
          <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT
             LAST_INSERT_ID()
@@ -19,41 +20,59 @@
             #if($velocityCount != 1),#end#{$column.javaName}
 #end
           )
+          </sql>
      </operation>
 
      <operation name="update" paramType="object" remark="更新表:${table.sqlName}">
+        <sql>
         UPDATE ${table.sqlName} SET
 #foreach ( $column in $table.columnList )
          #if($velocityCount != 1),#end$column.sqlName = #{$column.javaName}
 #end
         WHERE id = #{id}
+        </sql>
      </operation>
 
      <operation name = "deleteById" multiplicity="one" remark="根据ID删除数据:${table.sqlName}">
+        <sql>
         DELETE FROM ${table.sqlName} WHERE
 #foreach ( $column in $table.primaryKeys.columnList )
         $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
 #end
+        </sql>
      </operation>
      <operation name = "getById" multiplicity = "one" remark="根据主键获取数据:${table.sqlName}">
-           SELECT * FROM ${table.sqlName} WHERE
+          <sql>
+            SELECT * FROM ${table.sqlName} WHERE
 #foreach ( $column in $table.primaryKeys.columnList )
            $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
 #end
+           </sql>
      </operation>
 
           <operation name = "getAll" multiplicity = "many" paramType="object" remark="根据主键获取数据:${table.sqlName}">
+                <sql>
                 SELECT * FROM ${table.sqlName} WHERE
      #foreach ( $column in $table.primaryKeys.columnList )
                 $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
      #end
+                </sql>
           </operation>
 
 
      <operation name = "getByPage" multiplicity = "paging" paging="ABC" remark="根据主键获取数据:${table.sqlName}">
+          <extraparams>
+
+                   <param name='start' javatype="java.lang.Integer"/>
+                   <param name='end' javatype="java.lang.Integer"/>
+                   <param name='conditionObject' javatype="java.lang.Object"/>
+
+                </extraparams>
+          <sql>
            SELECT * FROM ${table.sqlName} WHERE
 #foreach ( $column in $table.columnList )
            $column.sqlName = #{$column.javaName}
 #end
+    </sql>
      </operation>
 </table>

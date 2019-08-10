@@ -4,6 +4,7 @@ import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,11 +16,18 @@ public class CfOperation {
      * 操作名
      */
     private String name;
+    /**
+     * 分页返回对象
+     */
     private String paging;
     /**
      * 参数类型
      */
     private ParamTypeEnum paramType;
+
+    /** 参数类型 */
+    private List<CfParam> paramList;
+
     /**
      * 返回类型
      */
@@ -160,7 +168,17 @@ public class CfOperation {
         return primitiveForeachParams;
     }
 
+    public List<CfParam> getParamList() {
+        return paramList;
+    }
+
+    public void setParamList(List<CfParam> paramList) {
+        this.paramList = paramList;
+    }
+
     public void setPrimitiveForeachParams(Map<String, String> primitiveForeachParams) {
         this.primitiveForeachParams = primitiveForeachParams;
     }
+
+
 }

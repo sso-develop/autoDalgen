@@ -5,6 +5,7 @@ import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 import com.lambert.dalgen.mybatis.model.config.CfColumn;
 import com.lambert.dalgen.mybatis.model.config.CfOperation;
+import com.lambert.dalgen.mybatis.model.config.CfParam;
 import com.lambert.dalgen.mybatis.model.config.CfTable;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -59,33 +60,42 @@ public class CfTableRepository {
     }
 
     private void fillOperation(CfTable cfTable, Element table) {
+        //获取operation操作语句
         List<Element> elements = table.elements("operation");
         for (Element e : elements) {
+
             CfOperation cfOperation = new CfOperation();
 
-            cfOperation.setRemark(attr(e, "remark"));
+            cfOperation.setRemark(attr(e, "remark"));//备注
             cfOperation.setName(attr(e, "name"));
-            cfOperation.setMultiplicity(MultiplicityEnum.getByCode(attr(e, "multiplicity")));
+            cfOperation.setMultiplicity(MultiplicityEnum.getByCode(attr(e, "multiplicity")));//返回类型
+            //@TODO 无用代码
+            /*******************************************/
             cfOperation.setPaging(attr(e, "paging"));
-
             if (cfOperation.getMultiplicity() == MultiplicityEnum.paging) {
                 Validate.notEmpty(cfOperation.getPaging(), "需要设置paging,用来生成分页类");
             }
+            /*******************************************/
+            //@TODO 参数配置升级
             cfOperation.setParamType(ParamTypeEnum.getByCode(attr(e, "paramType")));
+            /*******************************************/
             cfOperation.setResultMap(attr(e, "resultmap"));
             cfOperation.setResultType(attr(e, "resulttype"));
 
 
-
             setCfOperationCdata(cfTable, e, cfOperation);
             fillOperationParams(e, cfOperation);
+            fillExtraParam(e,cfOperation);
             cfTable.addOperation(cfOperation);
         }
 
     }
 
     private void setCfOperationCdata(CfTable cfTable, Element e, CfOperation cfOperation) {
-        String cXml = e.asXML();
+
+        Element sqlElement = e.element("sql");
+
+        String cXml = sqlElement.asXML();
         String[] lines = StringUtils.split(cXml, "\n");
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < lines.length - 1; i++) {
@@ -199,6 +209,23 @@ public class CfTableRepository {
             cfTable.addColumn(cfColumn);
         }
     }
+
+    private void fillExtraParam(Element operation,CfOperation cfOperation){
+        Element extraParamElement = operation.element("extraparams");
+        if(extraParamElement != null){
+            List<Element> paramElements = extraParamElement.elements("param");
+            List<CfParam> cfParamList = new ArrayList<CfParam>();
+            for (Element paramElement : paramElements) {
+                CfParam cfParam = new CfParam();
+                cfParam.setName(attr(paramElement,"name"));
+                cfParam.setJavaType(attr(paramElement,"javatype"));
+                cfParamList.add(cfParam);
+
+            }
+            cfOperation.setParamList(cfParamList);
+        }
+    }
+
     private String attr(Element e, String attr) {
         if (e == null || attr == null) {
             return null;
