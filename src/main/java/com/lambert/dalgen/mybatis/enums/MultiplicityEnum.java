@@ -8,17 +8,12 @@ import org.apache.commons.lang.StringUtils;
  * @version $Id: MultiplicityEnum.java, v 0.1 2019年05月29日 8:29 PM lambert Exp $
  */
 public enum MultiplicityEnum {
-    /**
-     * 对象
-     */
+
+    /** 对象 */
     one("one"),
-    /**
-     * 集合
-     */
+    /** 集合 */
     many("many"),
-    /**
-     * 分页对象
-     */
+    /** 分页对象*/
     paging("paging");
 
     /**

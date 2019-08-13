@@ -25,9 +25,6 @@ public class CfOperation {
      */
     private ParamTypeEnum paramType;
 
-    /** 参数类型 */
-    private List<CfParam> paramList;
-
     /**
      * 返回类型
      */
@@ -57,6 +54,8 @@ public class CfOperation {
      */
     private String sqlDesc;
 
+    private Map<String,String> extraParams = new HashMap<String, String>();
+
     private Map<String, String> primitiveParams = new HashMap<String, String>();
 
     private Map<String, String> primitiveForeachParams = new HashMap<String, String>();
@@ -69,11 +68,18 @@ public class CfOperation {
     }
     public void addPrimitiveForeachParam(String itemName, String collName) {
         if(this.primitiveForeachParams == null) this.primitiveForeachParams = new HashMap<String, String>();
+
         if(this.primitiveForeachParams.containsKey(itemName)){
             this.primitiveForeachParams.put(itemName+collName, collName);
         }else {
             this.primitiveForeachParams.put(itemName, collName);
         }
+    }
+
+
+    public void addExtraParams(String itemName, String collName){
+        if(this.extraParams == null) this.extraParams = new HashMap<String, String>();
+        this.extraParams.put(itemName, collName);
     }
 
     public String getName() {
@@ -160,6 +166,10 @@ public class CfOperation {
         return primitiveParams;
     }
 
+    public Map<String, String> getExtraParams() {
+        return extraParams;
+    }
+
     public void setPrimitiveParams(Map<String, String> primitiveParams) {
         this.primitiveParams = primitiveParams;
     }
@@ -168,17 +178,11 @@ public class CfOperation {
         return primitiveForeachParams;
     }
 
-    public List<CfParam> getParamList() {
-        return paramList;
-    }
-
-    public void setParamList(List<CfParam> paramList) {
-        this.paramList = paramList;
-    }
 
     public void setPrimitiveForeachParams(Map<String, String> primitiveForeachParams) {
         this.primitiveForeachParams = primitiveForeachParams;
     }
+
 
 
 }

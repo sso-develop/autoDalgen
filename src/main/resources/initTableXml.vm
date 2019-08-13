@@ -50,17 +50,21 @@
            </sql>
      </operation>
 
-          <operation name = "getAll" multiplicity = "many" paramType="object" remark="根据主键获取数据:${table.sqlName}">
+          <operation name = "getAll" multiplicity = "many" remark="根据主键获取数据:${table.sqlName}">
+               <extraparams>
+                  <param name='conditionObject' javatype="java.lang.Object"/>
+               </extraparams>
                 <sql>
                 SELECT * FROM ${table.sqlName} WHERE
-     #foreach ( $column in $table.primaryKeys.columnList )
-                $column.sqlName = #{${column.javaName},jdbcType=${column.sqlType}}
-     #end
+    #foreach ( $column in $table.columnList )
+               $column.sqlName = #{conditionObject.$column.javaName,jdbcType=${column.sqlType}}
+    #end
                 </sql>
           </operation>
 
 
-     <operation name = "getByPage" multiplicity = "paging" paging="ABC" remark="根据主键获取数据:${table.sqlName}">
+
+     <operation name = "getByPageCount" multiplicity = "many" resultType="java.lang.Integer"  remark="根据主键获取数据:${table.sqlName}">
           <extraparams>
 
                    <param name='start' javatype="java.lang.Integer"/>
@@ -71,7 +75,24 @@
           <sql>
            SELECT * FROM ${table.sqlName} WHERE
 #foreach ( $column in $table.columnList )
-           $column.sqlName = #{$column.javaName}
+           $column.sqlName = #{conditionObject.$column.javaName,jdbcType=${column.sqlType}}
+#end
+    </sql>
+     </operation>
+
+
+     <operation name = "getByPage" multiplicity = "many" remark="根据主键获取数据:${table.sqlName}">
+          <extraparams>
+
+                   <param name='start' javatype="java.lang.Integer"/>
+                   <param name='end' javatype="java.lang.Integer"/>
+                   <param name='conditionObject' javatype="java.lang.Object"/>
+
+                </extraparams>
+          <sql>
+           SELECT * FROM ${table.sqlName} WHERE
+#foreach ( $column in $table.columnList )
+           $column.sqlName = #{conditionObject.$column.javaName,jdbcType=${column.sqlType}}
 #end
     </sql>
      </operation>

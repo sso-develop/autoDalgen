@@ -59,6 +59,14 @@ public class MySQLTableRepository {
         }
     }
 
+    /**
+     * 添加KEY
+     * @param connection
+     * @param databaseMetaData
+     * @param tableName
+     * @param table
+     * @throws SQLException
+     */
     private void fillPrimaryKeys(Connection connection, DatabaseMetaData databaseMetaData,String tableName,Table table) throws SQLException {
         PrimaryKeys primaryKeys = null;
 

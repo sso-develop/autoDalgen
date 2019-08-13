@@ -5,7 +5,6 @@ import com.lambert.dalgen.mybatis.enums.MultiplicityEnum;
 import com.lambert.dalgen.mybatis.enums.ParamTypeEnum;
 import com.lambert.dalgen.mybatis.model.config.CfColumn;
 import com.lambert.dalgen.mybatis.model.config.CfOperation;
-import com.lambert.dalgen.mybatis.model.config.CfParam;
 import com.lambert.dalgen.mybatis.model.config.CfTable;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ *
  * @author lambert
  * @version $Id: CfTableRepository.java, v 0.1 2019年05月25日 4:57 PM lambert Exp $
  */
@@ -76,16 +76,30 @@ public class CfTableRepository {
                 Validate.notEmpty(cfOperation.getPaging(), "需要设置paging,用来生成分页类");
             }
             /*******************************************/
+            //参数类型判断
+
+            Element extraparamElement =  e.element("extraparams");
+            ParamTypeEnum paramTypeEnum = ParamTypeEnum.getByCode(attr(e, "paramType"));
+
+            if(ParamTypeEnum.object == paramTypeEnum){
+                cfOperation.setParamType(paramTypeEnum);
+            }else if(extraparamElement != null){
+                cfOperation.setParamType(ParamTypeEnum.extra);
+            }else{
+                cfOperation.setParamType(paramTypeEnum);
+            }
+
+
             //@TODO 参数配置升级
-            cfOperation.setParamType(ParamTypeEnum.getByCode(attr(e, "paramType")));
+
             /*******************************************/
             cfOperation.setResultMap(attr(e, "resultmap"));
-            cfOperation.setResultType(attr(e, "resulttype"));
+            cfOperation.setResultType(attr(e, "resultType"));
 
 
             setCfOperationCdata(cfTable, e, cfOperation);
             fillOperationParams(e, cfOperation);
-            fillExtraParam(e,cfOperation);
+
             cfTable.addOperation(cfOperation);
         }
 
@@ -132,23 +146,28 @@ public class CfTableRepository {
             String cdataCount = forCount.replaceAll(ORDER_BY_PATTERN, REPLACE_TMP);
             int indexof = cdataCount.indexOf(REPLACE_TMP);
             if (indexof > 0) {
-                cdataCount = cdataCount.substring(0, indexof).replaceAll(
-                        "(?m)^\\s*$" + System.lineSeparator(), "");
+                //cdataCount = cdataCount.substring(0, indexof).replaceAll(
+                //        "(?m)^\\s*$" + System.lineSeparator(), "");
             }
 
             cfOperation.setCdataPageCount(cdataCount);
 
         }
     }
-    private void fillOperationParams(Element e, CfOperation cfOperation) {
-        if (cfOperation.getParamType() != ParamTypeEnum.primitive) {
-            return;
-        }
 
+    /**
+     * PrimitiveParams 参数
+     *
+     * @param e
+     * @param cfOperation
+     */
+    private void fillOperationPrimitiveParams(Element e,CfOperation cfOperation){
+        /***********************************/
         //取出foreach 用来判断是否有List参数
         List<Element> items = e.elements();
 
         if (CollectionUtils.isNotEmpty(items)) {
+
             for (Element item : items) {
                 List<Element> ies = item.elements();
                 if (CollectionUtils.isNotEmpty(ies)) {
@@ -173,7 +192,7 @@ public class CfTableRepository {
                 }
             }
         }
-
+        //获取sql 参数,如 id = #{id}
         Matcher m = PARAM_PATTERN.matcher(e.asXML());
         List<String> params = new ArrayList<String>();
         while (m.find()) {
@@ -194,6 +213,43 @@ public class CfTableRepository {
             }
             cfOperation.addPrimitiveParam(attr, type);
         }
+    }
+
+    /**
+     * extra 参数
+     * @param e
+     * @param cfOperation
+     */
+    private void fillOperationExtraParams(Element e,CfOperation cfOperation){
+        Element extraparamElement =  e.element("extraparams");
+        if(extraparamElement == null){
+            return;
+        }
+        List<Element> paramElements = extraparamElement.elements("param");
+
+        for(Element paramElement:paramElements){
+            cfOperation.addExtraParams(attr(paramElement,"name"),attr(paramElement,"javatype"));
+        }
+    }
+
+    /**
+     * 参数优先级
+     * object -> extra -> primitive
+     * @param e operation 元素
+     * @param cfOperation
+     */
+    private void fillOperationParams(Element e, CfOperation cfOperation) {
+        System.err.println(cfOperation.getParamType()+"---");
+        if (cfOperation.getParamType() == ParamTypeEnum.object) {
+            return;
+        }
+
+        if(ParamTypeEnum.extra == cfOperation.getParamType()){
+            fillOperationExtraParams(e,cfOperation);
+
+        }else{
+            fillOperationPrimitiveParams(e,cfOperation);
+        }
 
     }
 
@@ -210,22 +266,12 @@ public class CfTableRepository {
         }
     }
 
-    private void fillExtraParam(Element operation,CfOperation cfOperation){
-        Element extraParamElement = operation.element("extraparams");
-        if(extraParamElement != null){
-            List<Element> paramElements = extraParamElement.elements("param");
-            List<CfParam> cfParamList = new ArrayList<CfParam>();
-            for (Element paramElement : paramElements) {
-                CfParam cfParam = new CfParam();
-                cfParam.setName(attr(paramElement,"name"));
-                cfParam.setJavaType(attr(paramElement,"javatype"));
-                cfParamList.add(cfParam);
-
-            }
-            cfOperation.setParamList(cfParamList);
-        }
-    }
-
+    /**
+     * 获取元素属性
+     * @param e
+     * @param attr
+     * @return
+     */
     private String attr(Element e, String attr) {
         if (e == null || attr == null) {
             return null;

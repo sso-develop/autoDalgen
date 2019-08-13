@@ -8,14 +8,13 @@ import org.apache.commons.lang.StringUtils;
  * @version $Id: A.java, v 0.1 2019年05月29日 8:31 PM lambert Exp $
  */
 public enum ParamTypeEnum {
-    /**
-     * DO作为参数.
-     */
+    /** DO作为参数 */
     object("object"),
-    /**
-     * 原生态参数.
-     */
-    primitive("primitive");
+    /** 原生态参数 */
+    primitive("primitive"),
+    /** 扩展参数 */
+    extra("extra");
+
 
     /**
      * The Code.
@@ -38,6 +37,7 @@ public enum ParamTypeEnum {
      * @return the param type enum
      */
     public static ParamTypeEnum getByCode(String code) {
+
         for (ParamTypeEnum paramTypeEnum : ParamTypeEnum.values()) {
             if (StringUtils.equals(code, paramTypeEnum.code)) {
                 return paramTypeEnum;

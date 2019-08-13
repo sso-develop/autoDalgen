@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * jdbcType -- javaType
  * @author lambert
  * @version $Id: A.java, v 0.1 2019年05月29日 8:31 PM lambert Exp $
  */
