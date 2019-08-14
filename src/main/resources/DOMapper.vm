@@ -14,6 +14,6 @@ public interface ${doMapper.className}{
      * @param ${param.param}
 #end
      */
-    ${method.returnClass} ${method.name}(#foreach ( $param in $method.params )${param.paramType} ${param.param}#end);
+    ${method.returnClass} ${method.name}(#foreach ($param in $method.params )#if($velocityCount != 1),#end${param.paramType} ${param.param} #end);
  #end
 }

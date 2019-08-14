@@ -16,19 +16,8 @@
       <sql id="Base_Column_List">#foreach ( $column in $xmlMapper.cfTable.columns )${column.name}#if($xmlMapper.cfTable.columns.size() != $velocityCount),#end#end</sql>
 
  #foreach ( $operation in $xmlMapper.cfTable.operations )
- #if($operation.multiplicity.code=="paging")
-
-    <#operation2Sql($operation.name) id="#operation2Sql($operation.name)Count" #mapperResult($operation)>
-             ${operation.cdataPageCount}
-    </#operation2Sql($operation.name)>
-    <#operation2Sql($operation.name) id="#operation2Sql($operation.name)Result" #mapperResult($operation)>
-          ${operation.cdata}
-          limit #{start},#{limit}
-    </#operation2Sql($operation.name)>
- #else
-    <#operation2Sql($operation.name) id="#operation2Sql($operation.name)" #mapperResult($operation)>
+    <#operation2Sql($operation.name) id="$operation.name" #mapperResult($operation)>
          ${operation.cdata}
     </#operation2Sql($operation.name)>
- #end
  #end
 </mapper>

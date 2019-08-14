@@ -50,32 +50,32 @@
            </sql>
      </operation>
 
-          <operation name = "getAll" multiplicity = "many" remark="根据主键获取数据:${table.sqlName}">
-               <extraparams>
-                  <param name='conditionObject' javatype="java.lang.Object"/>
-               </extraparams>
-                <sql>
-                SELECT * FROM ${table.sqlName} WHERE
-    #foreach ( $column in $table.columnList )
-               $column.sqlName = #{conditionObject.$column.javaName,jdbcType=${column.sqlType}}
-    #end
-                </sql>
-          </operation>
+      <operation name = "getAll" multiplicity = "many" remark="根据主键获取数据:${table.sqlName}">
+           <extraparams>
+              <param name='conditionObject' javatype="java.lang.Object"/>
+           </extraparams>
+            <sql>
+            SELECT * FROM ${table.sqlName} WHERE 1=1
+#foreach ( $column in $table.columnList )
+            <if test="conditionObject.$column.javaName != null and conditionObject.$column.javaName != ''">
+                AND $column.sqlName = #{conditionObject.$column.javaName}
+           </if>
+#end
+            </sql>
+       </operation>
 
 
 
      <operation name = "getByPageCount" multiplicity = "many" resultType="java.lang.Integer"  remark="根据主键获取数据:${table.sqlName}">
           <extraparams>
-
-                   <param name='start' javatype="java.lang.Integer"/>
-                   <param name='end' javatype="java.lang.Integer"/>
-                   <param name='conditionObject' javatype="java.lang.Object"/>
-
-                </extraparams>
+              <param name='conditionObject' javatype="java.lang.Object"/>
+          </extraparams>
           <sql>
-           SELECT * FROM ${table.sqlName} WHERE
+           SELECT COUNT(1) FROM ${table.sqlName} WHERE 1=1
 #foreach ( $column in $table.columnList )
-           $column.sqlName = #{conditionObject.$column.javaName,jdbcType=${column.sqlType}}
+           <if test="conditionObject.$column.javaName != null and conditionObject.$column.javaName != ''">
+               AND $column.sqlName = #{conditionObject.$column.javaName}
+           </if>
 #end
     </sql>
      </operation>
@@ -83,17 +83,18 @@
 
      <operation name = "getByPage" multiplicity = "many" remark="根据主键获取数据:${table.sqlName}">
           <extraparams>
-
-                   <param name='start' javatype="java.lang.Integer"/>
-                   <param name='end' javatype="java.lang.Integer"/>
-                   <param name='conditionObject' javatype="java.lang.Object"/>
-
-                </extraparams>
+               <param name='start' javatype="java.lang.Integer"/>
+               <param name='limit' javatype="java.lang.Integer"/>
+               <param name='conditionObject' javatype="java.lang.Object"/>
+          </extraparams>
           <sql>
-           SELECT * FROM ${table.sqlName} WHERE
+           SELECT * FROM ${table.sqlName} WHERE 1=1
 #foreach ( $column in $table.columnList )
-           $column.sqlName = #{conditionObject.$column.javaName,jdbcType=${column.sqlType}}
+            <if test="conditionObject.$column.javaName != null and conditionObject.$column.javaName != ''">
+                AND $column.sqlName = #{conditionObject.$column.javaName}
+            </if>
 #end
-    </sql>
+            order by id desc limit #{start},#{limit}
+          </sql>
      </operation>
 </table>

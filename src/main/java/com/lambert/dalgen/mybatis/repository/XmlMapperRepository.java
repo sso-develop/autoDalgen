@@ -207,9 +207,8 @@ public class XmlMapperRepository {
                 String pmName = (String) pm.getKey();
                 String pmType = (String) pm.getValue();
 
-                DOMapperMethodParam methodParam = new DOMapperMethodParam(pmType, pmName);
+                DOMapperMethodParam methodParam = new DOMapperMethodParam(getClassAndImport(doMapper,pmType), pmName);
 
-                String custJavaType = ConfigUtil.getConfig().getTypeMap().get(pmType);
 
                 params.add(methodParam);
             }

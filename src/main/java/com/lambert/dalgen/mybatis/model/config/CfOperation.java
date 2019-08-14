@@ -53,15 +53,23 @@ public class CfOperation {
      * 排序
      */
     private String sqlDesc;
-
+    /**
+     * 扩展参数
+     */
     private Map<String,String> extraParams = new HashMap<String, String>();
-
+    /**
+     * 原始参数
+     */
     private Map<String, String> primitiveParams = new HashMap<String, String>();
 
     private Map<String, String> primitiveForeachParams = new HashMap<String, String>();
 
 
-
+    /**
+     * 添加原始参数
+     * @param attr 参数名称
+     * @param type jdbc 类
+     */
     public void addPrimitiveParam(String attr, String type) {
         if(this.primitiveParams == null) this.primitiveParams = new HashMap<String, String>();
         this.primitiveParams.put(attr, type);
@@ -76,7 +84,11 @@ public class CfOperation {
         }
     }
 
-
+    /**
+     * 添加扩展参数
+     * @param itemName 参数名称
+     * @param collName java 类
+     */
     public void addExtraParams(String itemName, String collName){
         if(this.extraParams == null) this.extraParams = new HashMap<String, String>();
         this.extraParams.put(itemName, collName);
