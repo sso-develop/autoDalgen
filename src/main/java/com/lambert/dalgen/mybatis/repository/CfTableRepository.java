@@ -37,7 +37,7 @@ public class CfTableRepository {
 
     public CfTable gainCfTable() throws DocumentException {
 
-        File tableFile = new File(DalgenProperties.getDalgenDirectory()+"/uums-sys-app.xml");
+        File tableFile = new File(DalgenProperties.getDalgenDirectory()+"/"+DalgenProperties.getTables()+".xml");
 
 
         SAXReader saxReader = new SAXReader();

@@ -24,7 +24,7 @@ public class InitTableXmlGenerator extends TemplateGenerator {
 
     @Override
     protected void setPath() {
-        super.path = DalgenProperties.getDalgenDirectory() +"/uums-sys-app.xml";
+        super.path = DalgenProperties.getDalgenDirectory() +"/"+DalgenProperties.getTables()+".xml";
 
     }
 

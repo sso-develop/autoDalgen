@@ -20,9 +20,9 @@ public class DalgenProperties {
 
     private static String projectDirectory;
 
-    private final static String basePackageName = "com.lambert";
+    private final static String basePackageName = "cn.yourbuyer.management";
 
-    private final static String basePackagePath = "/src/main/java/com/lambert";
+    private final static String basePackagePath = "/src/main/java/cn/yourbuyer/management";
 
     private final static String resourcesPath = "/src/main/resources";
 
@@ -77,16 +77,16 @@ public class DalgenProperties {
     }
 
     private static String getBasePackageName(){
-        return basePackageName+".common."+projectName+".dal";
+        return basePackageName+".common.dal";
     }
 
 
     private static String getDalClassDirectory(){
-        return projectDirectory+projectDaoPath+basePackagePath+"/common/"+projectName+"/dal";
+        return projectDirectory+projectDaoPath+basePackagePath+"/common/dal";
     }
 
     public static String getDalResourcesDirectory(){
-        return projectDirectory+projectDaoPath+resourcesPath+"/sqlmap/"+projectName;
+        return projectDirectory+projectDaoPath+resourcesPath+"/sqlmap";
     }
 
     public static String getDODirectory(){
@@ -99,10 +99,18 @@ public class DalgenProperties {
     public static String getDOMapperPackageName(){
         return getBasePackageName()+".daointerface";
     }
-
     public static String getDOMapperDirectory(){
         return getDalClassDirectory()+"/daointerface";
     }
+
+    public static String getModelDirectory(){
+        return projectDirectory+"/app/core/model"+"/src/main/java/cn/yourbuyer/management/core/model";
+    }
+
+    public static String getModelPackageName(){
+        return basePackageName+".core.model";
+    }
+
     public static String getDalgenDirectory(){
         return projectDirectory+"/dalgen";
     }

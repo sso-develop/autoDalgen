@@ -11,7 +11,6 @@ import com.lambert.dalgen.mybatis.model.java.*;
 import com.lambert.dalgen.mybatis.model.java.domapper.DOMapperMethod;
 import com.lambert.dalgen.mybatis.model.java.domapper.DOMapperMethodParam;
 import com.lambert.dalgen.utils.ConfigUtil;
-import com.lambert.dalgen.utils.StringDalUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -35,11 +34,24 @@ public class XmlMapperRepository {
         xmlMapper.setCfTable(cfTable);
         //`1
         preDo(xmlMapper,cfTable);
+        preModel(xmlMapper);
 
         Map<String, ResultMap> resultMaps = new HashMap<String, ResultMap>();
         preDOMapper(xmlMapper,cfTable);
 
         return xmlMapper;
+    }
+
+    private void  preModel(XmlMapper xmlMapper){
+        Model modelClass = new Model();
+        modelClass.setClassName(xmlMapper.getCfTable().getJavaName());
+        modelClass.setPackageName(DalgenProperties.getModelPackageName());
+        modelClass.setClassPath(DalgenProperties.getModelDirectory());
+
+        modelClass.setFieldses(xmlMapper.getDoClass().getFieldses());
+        modelClass.setImportList(xmlMapper.getDoClass().getImportList());
+        xmlMapper.setModelClass(modelClass);
+
     }
 
     private void preDo(XmlMapper xmlMapper,CfTable cfTable){

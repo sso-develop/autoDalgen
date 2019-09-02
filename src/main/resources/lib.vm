@@ -8,8 +8,6 @@ delete##
 select##
 #end
 #end
-
-
 #macro(mapperResult $operation)
 #if($operation.resultMap)
 resultMap="${operation.resultMap}"##

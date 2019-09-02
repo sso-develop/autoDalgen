@@ -26,7 +26,7 @@ public class ConfigUtil {
         typeMap.put("java.sql.Date","java.util.Date");
         typeMap.put("java.sql.Time","java.util.Date");
         typeMap.put("java.sql.Timestamp","java.util.Date");
-        typeMap.put("java.math.BigDecimal","Long");
+        typeMap.put("java.math.BigDecimal","java.math.BigDecimal");
         typeMap.put("byte","int");
         typeMap.put("short","int");
         if(config == null){

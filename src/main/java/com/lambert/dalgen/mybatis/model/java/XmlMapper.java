@@ -12,6 +12,8 @@ public class XmlMapper {
 
     private DO doClass;
 
+    private Model modelClass;
+
     private DOMapper doMapper;
 
     public CfTable getCfTable() {
@@ -28,6 +30,14 @@ public class XmlMapper {
 
     public void setDoClass(DO doClass) {
         this.doClass = doClass;
+    }
+
+    public Model getModelClass() {
+        return modelClass;
+    }
+
+    public void setModelClass(Model modelClass) {
+        this.modelClass = modelClass;
     }
 
     public DOMapper getDoMapper() {

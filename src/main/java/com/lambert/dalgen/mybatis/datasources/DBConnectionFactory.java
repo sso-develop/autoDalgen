@@ -1,5 +1,6 @@
 package com.lambert.dalgen.mybatis.datasources;
 
+import com.lambert.config.DalgenProperties;
 import com.lambert.dalgen.utils.LoggerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,13 @@ public class DBConnectionFactory {
     //声明Connection对象
 
     //驱动程序名
-    static String  driver = "com.mysql.jdbc.Driver";
+    static String  driver = DalgenProperties.getDriver();
     //URL指向要访问的数据库名mydata
-    static String url = "jdbc:mysql://sql.v83.vhostgo.com:3306/linzekuan?useUnicode=true&amp;characterEncoding=UTF-8";
+    static String url = DalgenProperties.getUrl();
     //MySQL配置时的用户名
-    static String user = "linzekuan";
+    static String user = DalgenProperties.getUser();
     //MySQL配置时的密码
-    static String password = "lzk1314";
+    static String password = DalgenProperties.getPassword();
 
     public static Connection  getConnection() {
         LoggerUtil.info(logger,"==== init connection ====");
