@@ -111,6 +111,15 @@ public class DalgenProperties {
         return basePackageName+".core.model";
     }
 
+
+    public static String getConvertorDirectory(){
+        return projectDirectory+"/app/core/model"+"/src/main/java/cn/yourbuyer/management/core/model/convertor";
+    }
+
+    public static String getConvertorPackageName(){
+        return basePackageName+".core.model.convertor";
+    }
+
     public static String getDalgenDirectory(){
         return projectDirectory+"/dalgen";
     }

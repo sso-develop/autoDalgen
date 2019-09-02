@@ -51,6 +51,9 @@ public class Main {
             ModelGenerator modelGenerator = new ModelGenerator("model.vm",xmlMapper.getModelClass());
             modelGenerator.run();
 
+            ConvertorGenerator convertorGenerator = new ConvertorGenerator("convertor.vm",xmlMapper);
+            convertorGenerator.run();
+
     }catch (Exception e){
             e.printStackTrace();
         }
