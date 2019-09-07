@@ -48,6 +48,8 @@ public class XmlMapperRepository {
         modelClass.setPackageName(DalgenProperties.getModelPackageName());
         modelClass.setClassPath(DalgenProperties.getModelDirectory());
 
+        modelClass.setTableName(xmlMapper.getDoClass().getTableName());
+
         modelClass.setFieldses(xmlMapper.getDoClass().getFieldses());
         modelClass.setImportList(xmlMapper.getDoClass().getImportList());
         xmlMapper.setModelClass(modelClass);
@@ -62,6 +64,7 @@ public class XmlMapperRepository {
         doClass.setClassPath(DalgenProperties.getDODirectory());
 
         doClass.setDesc(cfTable.getRemark());
+        doClass.setTableName(cfTable.getSqlname());
 
         for (CfColumn column : cfTable.getColumns()) {
             //提出不需要在DO中出现的字段

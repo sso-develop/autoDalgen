@@ -16,7 +16,6 @@ public class Main {
         Gson gson = new Gson();
         try {
 
-
             DalgenTableLoader loader = new DalgenTableLoader();
 
             Table table = loader.load();
@@ -54,9 +53,8 @@ public class Main {
             ConvertorGenerator convertorGenerator = new ConvertorGenerator("convertor.vm",xmlMapper);
             convertorGenerator.run();
 
-    }catch (Exception e){
+        }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }

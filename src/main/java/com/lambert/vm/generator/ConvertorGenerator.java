@@ -30,6 +30,7 @@ public class ConvertorGenerator extends TemplateGenerator {
     @Override
     protected void createContext() throws SQLException {
         ctx.put("DO", xmlMapper.getDoClass());
+        ctx.put("model", xmlMapper.getModelClass());
         ctx.put("packageName", DalgenProperties.getConvertorPackageName());
         ctx.put("className", xmlMapper.getModelClass().getClassName()+"Convertor");
 

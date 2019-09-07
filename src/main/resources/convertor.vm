@@ -1,4 +1,48 @@
 package $packageName;
 
+import ${DO.packageName}.${DO.className};
+import ${model.packageName}.${model.className};
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ${className}{
+
+    public static ${DO.className} convertor2DO( ${model.className} ${model.tableName} ){
+        ${DO.className} ${DO.tableName}DO = new ${DO.className}();
+
+#foreach ( $fields in $DO.fieldses )
+        ${DO.tableName}DO.set${fields.name}(${model.tableName}.get${fields.name}());
+#end
+        return ${DO.tableName}DO;
+
+    }
+
+    public static ${model.className} convertor2${model.className}(${DO.className} ${DO.tableName}DO){
+
+        ${model.className} ${model.tableName} = new ${model.className}();
+
+#foreach ( $fields in $DO.fieldses )
+        ${model.tableName}.set${fields.name}(${DO.tableName}DO.get${fields.name}());
+#end
+        return ${model.tableName};
+    }
+
+    public static List<${DO.className}> convertor2DOs(List<${model.className}> ${model.tableName}s){
+         List<${DO.className}> ${DO.tableName}DOs =  new ArrayList<${DO.className}>();
+
+         for (${model.className} ${model.tableName}: ${model.tableName}s) {
+            ${DO.tableName}DOs.add(convertor2DO(${model.tableName}));
+         }
+        return ${DO.tableName}DOs;
+    }
+
+    public static List<${model.className}> convertor2${model.className}s(List<${DO.className}> ${DO.tableName}DOs){
+        List<${model.className}> ${model.tableName}s =  new ArrayList<${model.className}>();
+
+        for (${DO.className} ${DO.tableName}DO: ${DO.tableName}DOs) {
+          ${model.tableName}s.add(convertor2${model.className}(${DO.tableName}DO));
+        }
+        return ${model.tableName}s;
+    }
 }
