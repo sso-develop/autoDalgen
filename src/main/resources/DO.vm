@@ -19,7 +19,7 @@ public class ${DO.className}{
      /**
       * Set ${fields.name} ${fields.desc}.
       */
-     public void set${fields.name}(${fields.javaType} ${fields.name}){
+     public void set$stringUtils.toUpperCaseFirstOne(${fields.name})(${fields.javaType} ${fields.name}){
             this.${fields.name} = ${fields.name};
      }
      /**
@@ -27,7 +27,7 @@ public class ${DO.className}{
       *
       * @return the string
       */
-     public ${fields.javaType} get${fields.name}(){
+     public ${fields.javaType} get$stringUtils.toUpperCaseFirstOne(${fields.name})(){
          return ${fields.name};
      }
 #end

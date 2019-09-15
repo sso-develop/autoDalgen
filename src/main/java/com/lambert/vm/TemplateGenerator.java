@@ -1,5 +1,6 @@
 package com.lambert.vm;
 
+import com.lambert.tool.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -33,11 +34,18 @@ public abstract class TemplateGenerator {
         if(ctx == null){
             ctx = new VelocityContext();
         }
+
+
+        StringUtils stringUtils = new StringUtils();
+
+        ctx.put("stringUtils",stringUtils);
+
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
         ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
         ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
+
         ve.init();
         template = ve.getTemplate(vm);
 

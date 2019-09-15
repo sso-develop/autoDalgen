@@ -12,7 +12,7 @@ public class ${className}{
         ${DO.className} ${DO.tableName}DO = new ${DO.className}();
 
 #foreach ( $fields in $DO.fieldses )
-        ${DO.tableName}DO.set${fields.name}(${model.tableName}.get${fields.name}());
+        ${DO.tableName}DO.set$stringUtils.toUpperCaseFirstOne(${fields.name})(${model.tableName}.get$stringUtils.toUpperCaseFirstOne(${fields.name})());
 #end
         return ${DO.tableName}DO;
 
@@ -23,7 +23,7 @@ public class ${className}{
         ${model.className} ${model.tableName} = new ${model.className}();
 
 #foreach ( $fields in $DO.fieldses )
-        ${model.tableName}.set${fields.name}(${DO.tableName}DO.get${fields.name}());
+        ${model.tableName}.set$stringUtils.toUpperCaseFirstOne(${fields.name})(${DO.tableName}DO.get$stringUtils.toUpperCaseFirstOne(${fields.name})());
 #end
         return ${model.tableName};
     }
