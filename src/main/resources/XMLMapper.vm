@@ -4,20 +4,20 @@
 <mapper namespace="${xmlMapper.doMapper.packageName}.${xmlMapper.doMapper.className}">
 
      <resultMap id="BaseResultMap" type="${xmlMapper.doClass.packageName}.${xmlMapper.doClass.className}">
-         #foreach ( $column in $xmlMapper.cfTable.columns )
-            #if($column.name=="id")
+#foreach ( $column in $xmlMapper.cfTable.columns )
+#if($column.name=="ID" || $column.name=="id")
                 <id column="$column.name" property="$column.javaName" jdbcType="$column.sqlType" javaType="$column.javaType"/>
-            #else
+#else
                 <result column="${column.name}" property="${column.javaName}" jdbcType="${column.sqlType}" javaType="${column.javaType}"/>
-            #end
-         #end
+#end
+#end
      </resultMap>
 
-      <sql id="Base_Column_List">#foreach ( $column in $xmlMapper.cfTable.columns )${column.name}#if($xmlMapper.cfTable.columns.size() != $velocityCount),#end#end</sql>
+     <sql id="Base_Column_List">#foreach ( $column in $xmlMapper.cfTable.columns )${column.name}#if($xmlMapper.cfTable.columns.size() != $velocityCount),#end#end</sql>
 
- #foreach ( $operation in $xmlMapper.cfTable.operations )
+#foreach ( $operation in $xmlMapper.cfTable.operations )
     <#operation2Sql($operation.name) id="$operation.name" #mapperResult($operation)>
          ${operation.cdata}
     </#operation2Sql($operation.name)>
- #end
+#end
 </mapper>

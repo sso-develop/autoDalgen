@@ -12,7 +12,7 @@ select##
 #if($operation.resultMap)
 resultMap="${operation.resultMap}"##
 #elseif($operation.resultType)
-resultMap="${operation.resultType}"##
+resultType="${operation.resultType}"##
 #elseif(${param.indexOf("insert")}!=-1)
 #elseif(${param.indexOf("update")}!=-1)
 #elseif(${param.indexOf("delete")}!=-1)

@@ -1,5 +1,7 @@
 package ${doMapper.packageName};
 
+import org.apache.ibatis.annotations.Param;
+
 #foreach ( $import in $doMapper.importList )
 import $import;
 #end
@@ -14,6 +16,6 @@ public interface ${doMapper.className}{
      * @param ${param.param}
 #end
      */
-    ${method.returnClass} ${method.name}(#foreach ($param in $method.params )#if($velocityCount != 1),#end${param.paramType} ${param.param} #end);
+    ${method.returnClass} ${method.name}(#foreach ($param in $method.params )#if($velocityCount != 1),#end#if($method.params.size() > 1)@Param("${param.param}")#end${param.paramType} ${param.param} #end);
  #end
 }

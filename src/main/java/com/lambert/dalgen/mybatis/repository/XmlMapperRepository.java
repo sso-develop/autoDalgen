@@ -82,7 +82,7 @@ public class XmlMapperRepository {
         DO doClass = xmlMapper.getDoClass();
 
         DOMapper doMapper = new DOMapper();
-        doMapper.setClassName(doClass.getClassName() + "Mapper");
+        doMapper.setClassName(xmlMapper.getCfTable().getJavaName() + "DAO");
         doMapper.setPackageName(DalgenProperties.getDOMapperPackageName());
         doMapper.setClassPath(DalgenProperties.getDOMapperDirectory());
         doMapper.setDesc(cfTable.getRemark());

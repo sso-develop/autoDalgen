@@ -93,7 +93,7 @@ public class CfTableRepository {
             //@TODO 参数配置升级
 
             /*******************************************/
-            cfOperation.setResultMap(attr(e, "resultmap"));
+            cfOperation.setResultMap(attr(e, "resultMap"));
             cfOperation.setResultType(attr(e, "resultType"));
 
 
